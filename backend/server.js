@@ -1,5 +1,6 @@
 const express = require('express');
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '.env') });
 const cors = require('cors');
 const connectDB = require('./config/db');
 const Contact = require('./contact');
@@ -9,11 +10,16 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const app = express();
-connectDB();
 
 if (!process.env.JWT_SECRET) {
     throw new Error('JWT_SECRET must be set in the backend environment.');
 }
+
+if (!process.env.MONGODB_URI) {
+    throw new Error('MONGODB_URI must be set in the backend environment.');
+}
+
+connectDB();
 
 app.use(cors());
 app.use(express.json());
