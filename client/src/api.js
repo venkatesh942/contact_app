@@ -1,7 +1,9 @@
 import axios from 'axios';
 
+const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:5000').replace(/\/+$/, '');
+
 const API = axios.create({
-    baseURL: 'http://localhost:5000/api/contacts',
+    baseURL: `${API_URL}/api/contacts`,
 })
 
 API.interceptors.request.use((config) => {
@@ -19,7 +21,7 @@ API.interceptors.response.use((response) => response, (error) => {
 });
 
 export const AuthAPI = axios.create({
-    baseURL: 'http://localhost:5000/api/auth',
+    baseURL: `${API_URL}/api/auth`,
 });
 
 export default API;
